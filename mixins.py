@@ -53,7 +53,6 @@ class Empresa:
         self.nome = nome
         self.funcionarios = funcionarios
 
-
     def calcular_despesas_da_empresa_mensais(self):
         valor_mensal = 0.0
         for funcionario in self.funcionarios:
