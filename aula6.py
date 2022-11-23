@@ -1,29 +1,65 @@
 class Funcionario:
-    def __init__(self, ctps):
-        self.ctps = ctps
+    def __init__(self, nome) -> None:
+        self._nome = nome
+    
+    def registra_horas(self, horas):
+        print(f"Funcionário: {self._nome} registrando {horas} horas")
 
-    def __str__(self):
-        return f"Funcionario de registro: {self.ctps}"
+class EmpresaTeste(Funcionario):
+    
+    def registra_horas(self, horas):
+        print(f"Funcionario {self._nome} da Empresa Teste registra: {horas} horas")
 
-
-class Pessoa:
-    def __init__(self, nome, idade) -> None:
-        self.nome = nome
-        self.idade = idade
-
-    def __str__(self) -> str:
-        return f"Nome: {self.nome} - Idade: {self.idade}"
-
+    def resolver_bugs(self):
+        print(f"Resolver bugs")
 
 
-class FuncionarioEmpresa(Pessoa, Funcionario):
-    def __init__(self, nome, idade, email) -> None:
-        super().__init__(nome, idade)
-        self.email = email
+class EmpresaQualquer(Funcionario):
+    
+    def registra_horas(self, horas):
+        print(f"Registrando {horas} horas para o funcionário {self._nome} da empresa qualquer")
 
-    def __str__(self) -> str:
-        return super().__str__()
+    def consultar_apis_externas(self):
+        print(f"Consultando APIs externas")
 
 
-funcionario_empresa = FuncionarioEmpresa("Joao Victor", 25, "11111", email="jv@empresa.com.br")
-print(funcionario_empresa)
+class Junior(EmpresaTeste):
+    def __init__(self, nome) -> None:
+        super().__init__(nome)
+
+    def estudar_orientacao_a_objetos(self):
+        print(f"Estudando OO...")
+
+
+class Pleno(EmpresaQualquer, EmpresaTeste):
+
+    def escrever_testes_unitarios(self):
+        print(f"Escrevendo testes unitários")
+
+
+class Senior(EmpresaTeste, EmpresaQualquer):
+    def __init__(self, nome) -> None:
+        super().__init__(nome)
+
+    def otimizacoes_de_codigo(self):
+        print(f"Otimizando código")
+
+    def monitorar_infra(self):
+        print(f"Monitorando infraestrutura")
+    
+    def ensinar_plenos_e_juniors(self):
+        print(f"Mentorando Plenos e Juniors")
+
+
+junior = Junior(nome="José")
+junior.registra_horas(6)
+pleno = Pleno(nome="João")
+pleno.registra_horas(8)
+
+"""
+Ordem do MRO:
+- Pleno
+- Empresa Qualquer > Funcionario
+- Empresa Teste > Funcionario
+O MRO verifica se 'Funcionario' é uma "GoodHead". Como a 'Empresa Teste' está no mesmo nível de 'Empresa Qualquer' ele usa a 'Empresa Qualquer'
+"""
